@@ -1,0 +1,48 @@
+FILE_NAME = 'input.txt'
+
+
+def binary_diagnostic(binaries: list[str]) -> int:
+    """Gets diagnostic of power"""
+
+    gamma_str = ''
+    epsilon_str = ''
+    for idx in range(len(binaries[0])):
+        counter_0 = 0  # could check for if already in half
+        counter_1 = 0  # should be able to get most common and just attach that char
+        for bin in binaries:
+            if (bin[idx] == '0'):
+                counter_0 += 1
+            else:
+                counter_1 += 1
+        if counter_0 > counter_1:
+            gamma_str += '0'
+            epsilon_str += '1'
+        else:
+            gamma_str += '1'
+            epsilon_str += '0'
+
+    gamma = int(gamma_str, 2)
+    epsilon = int(epsilon_str, 2)
+    print(gamma_str, epsilon_str)
+    print(gamma, epsilon)
+
+    return gamma * epsilon
+
+
+def parse_to_nums(text_input: str) -> list[int]:
+    """Parses text input to list of numbers"""
+
+    text_list = text_input.splitlines()
+    return [int(txt_num) for txt_num in text_list]
+
+
+def parse_to_list(text_input: str) -> list[str]:
+    """Parses text input to list of strings"""
+
+    text_list = text_input.splitlines()
+    return text_list
+
+
+with open(FILE_NAME, 'r') as inp:
+    complete_input = inp.read()
+    print(binary_diagnostic(parse_to_list(complete_input)))
