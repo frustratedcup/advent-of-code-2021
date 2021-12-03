@@ -1,0 +1,25 @@
+def sonar_sweep(measurements_input):
+    """Gets number of increases in depth"""
+
+    increase_counter = 0
+    decrease_counter = 0
+
+    measurements_input = measurements_input.splitlines()
+    measurements = [int(measure) for measure in measurements_input]
+
+    for idx, msr in enumerate(measurements):
+        if idx == 0:
+            continue
+        if msr > measurements[idx - 1]:
+            increase_counter += 1
+        elif msr < measurements[idx - 1]:
+            decrease_counter += 1
+
+    print(f"Sonar sweep log shows that measurements had a total of "
+          f"{increase_counter} increases, "
+          f"{decrease_counter} decreases.")
+
+
+with open('input.txt', 'r') as inp:
+    complete_input = inp.read()
+    sonar_sweep(complete_input)
