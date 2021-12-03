@@ -1,3 +1,6 @@
+FILE_NAME = 'input.txt'
+
+
 def sonar_sweep(measurements: list[int]):
     """Gets number of increases in depth"""
 
@@ -17,6 +20,24 @@ def sonar_sweep(measurements: list[int]):
           f"{decrease_counter} decreases.")
 
 
+def get_sliding_groups(values: list[int], group_amount: int) -> list[int]:
+    """Returns list of sliding sum of values"""
+
+    sliding_groups = []
+
+    for i, val in enumerate(values):
+        group_sum = 0
+
+        for cur_index in range(i, i + group_amount):
+            if (cur_index == len(values)):
+                break
+            group_sum += values[cur_index]
+
+        sliding_groups.append(group_sum)
+
+    return sliding_groups
+
+
 def parse_to_nums(text_input: str) -> list[int]:
     """Parses text input to list of numbers"""
 
@@ -24,6 +45,7 @@ def parse_to_nums(text_input: str) -> list[int]:
     return [int(txt_num) for txt_num in text_list]
 
 
-with open('input.txt', 'r') as inp:
+with open(FILE_NAME, 'r') as inp:
     complete_input = inp.read()
-    sonar_sweep(parse_to_nums(complete_input))
+    measurements_window = get_sliding_groups(parse_to_nums(complete_input), 3)
+    sonar_sweep(measurements_window)
