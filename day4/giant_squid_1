@@ -1,0 +1,20 @@
+FILE_NAME = 'test.txt'
+
+# first get array of numbers that will be called
+# then figure out all the columns and rows of each table, like a dictionary
+# store and remove depending on awway of called
+# sum of all unmarked numbers * last number called
+
+
+def parse_bingo_data(line_input: list[str]) -> dict[any]:
+    numbers_to_draw = line_input[0].split(',')
+
+    for line_row in line_input[1:]:
+        row = line_row.split(' ')
+        table = {rows, columns}
+
+    return {numbers_to_draw, tables}
+
+
+with open(FILE_NAME, 'r') as inp:
+    line_input = inp.readlines()
