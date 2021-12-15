@@ -1,0 +1,90 @@
+FILE_NAME = 'input.txt'
+
+
+def power_consumption(binaries: list[str]) -> int:
+    """Gets diagnostic of power"""
+
+    gamma_str = ''
+    epsilon_str = ''
+    for idx in range(len(binaries[0])):
+        counter_0 = 0
+        for bin in binaries:
+            if (bin[idx] == '0'):
+                counter_0 += 1
+        if counter_0 > (len(binaries) / 2):  # more than half of binaries
+            gamma_str += '0'
+            epsilon_str += '1'
+        else:
+            gamma_str += '1'
+            epsilon_str += '0'
+
+    gamma = int(gamma_str, 2)
+    epsilon = int(epsilon_str, 2)
+    print(gamma_str, epsilon_str)
+    print(gamma, epsilon)
+
+    return gamma * epsilon
+
+
+def get_oxygen_generator(binaries: list[str], index: int = 0) -> int:
+    """Gets most common binary in decimal"""
+
+    # recursive function
+    # not a loop
+    counter_0 = 0
+    for bin in binaries:
+        if (bin[index] == '0'):
+            counter_0 += 1
+    if counter_0 > (len(binaries) / 2):  # more than half of binaries
+        # filters in all 0 binaries
+        bit = '0'
+    else:
+        # filters in all 1 binaries
+        bit = '1'
+
+    filtered_list = [number for number in binaries if number[index] == bit]
+
+    if len(filtered_list) == 1:
+        return int(filtered_list[0], 2)
+    else:
+        return get_oxygen_generator(filtered_list, index + 1)
+
+
+def get_c02_scrubber(binaries: list[str], index: int = 0) -> int:
+    """Gets least common binary in decimal"""
+
+    counter_0 = 0
+    for bin in binaries:
+        if (bin[index] == '0'):
+            counter_0 += 1
+    if counter_0 <= (len(binaries) / 2):  # more or half of binaries
+        # filters in all 0 binaries
+        bit = '0'
+    else:
+        # filters in all 1 binaries
+        bit = '1'
+
+    filtered_list = [number for number in binaries if number[index] == bit]
+
+    if len(filtered_list) == 1:
+        return int(filtered_list[0], 2)
+    else:
+        return get_c02_scrubber(filtered_list, index + 1)
+
+
+def parse_to_list(text_input: str) -> list[str]:
+    """Parses text input to list of strings"""
+
+    text_list = text_input.splitlines()
+    return text_list
+
+
+with open(FILE_NAME, 'r') as inp:
+    complete_input = inp.read()
+    parsed_input = parse_to_list(complete_input)
+    oxygen_gen_rating = get_oxygen_generator(parsed_input)
+    print(f"Oxygen Generator Rating: {oxygen_gen_rating}")
+    co2_scrubber_rating = get_c02_scrubber(parsed_input)
+    print(f"CO2 Scrubber Rating: {co2_scrubber_rating}")
+    life_support_rating = oxygen_gen_rating * co2_scrubber_rating
+    print(f"Life Support Rating: {life_support_rating}")
